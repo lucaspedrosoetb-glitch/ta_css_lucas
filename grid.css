@@ -1,0 +1,146 @@
+/* ====== Grid - estilos da aula ====== */
+pre {
+  background: rgba(0,0,0,0.35);
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin-bottom: 15px;
+}
+pre code { background: none; padding: 0; }
+ul { margin-bottom: 15px; padding-left: 20px; }
+h3 { color: #00d8ff; margin: 15px 0 8px; }
+
+/* ====== Demonstrações ====== */
+.gd {
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px 0;
+  display: grid;               /* <- a base de tudo */
+  gap: 10px;
+}
+
+.cel {
+  background: #00d8ff;
+  color: #000;
+  min-height: 50px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.cel:nth-child(2n)  { background: #ffd700; }
+.cel:nth-child(3n)  { background: #ff7b00; }
+.cel:nth-child(5n)  { background: #7fff00; }
+.cel:nth-child(7n)  { background: lightcoral; }
+
+/* --- Colunas e linhas --- */
+.col-3      { grid-template-columns: 1fr 1fr 1fr; }
+.col-fixas  { grid-template-columns: 100px 200px 100px; }
+.col-fr     { grid-template-columns: 1fr 2fr 1fr; }
+.col-repeat { grid-template-columns: repeat(4, 1fr); }
+.col-misto  { grid-template-columns: 120px 1fr 1fr; }
+
+.linhas-demo {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 40px 90px;
+}
+
+/* --- gap --- */
+.gap-grande { grid-template-columns: repeat(3, 1fr); column-gap: 30px; row-gap: 10px; }
+
+/* --- Linhas implícitas --- */
+.auto-rows { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 60px; }
+
+/* --- Posicionamento por linhas --- */
+.span-demo { grid-template-columns: repeat(4, 1fr); }
+.span-demo .a { grid-column: 1 / 3; }          /* da linha 1 até a 3 */
+.span-demo .b { grid-column: span 2; }
+.span-demo .c { grid-row: span 2; }
+.span-demo .d { grid-column: 1 / -1; }          /* linha inteira */
+
+/* --- Responsivo sem media query --- */
+.auto-fit {
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+/* --- Áreas nomeadas --- */
+.layout-areas {
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: 50px 130px 50px;
+  grid-template-areas:
+    "topo    topo"
+    "menu    principal"
+    "rodape  rodape";
+}
+.layout-areas .topo      { grid-area: topo; }
+.layout-areas .menu      { grid-area: menu; }
+.layout-areas .principal { grid-area: principal; }
+.layout-areas .rodape    { grid-area: rodape; }
+
+/* --- Alinhamento --- */
+.alin {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 90px;
+}
+.alin .cel { min-height: 0; width: 70px; height: 40px; }
+.alin-center  { justify-items: center; align-items: center; }
+.alin-end     { justify-items: end;    align-items: end; }
+.alin-stretch .cel { width: auto; height: auto; }
+
+.place-center {
+  place-items: center;
+  height: 150px;
+}
+.place-center .cel { width: 80px; height: 80px; }
+
+/* --- Playground interativo --- */
+.controles { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 10px; }
+.controles label { display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; }
+.controles select, .controles input[type="number"] {
+  padding: 6px; border-radius: 6px; border: none;
+  background: #fff; color: #000; width: 130px;
+}
+#playground { grid-template-columns: repeat(3, 1fr); }
+
+/* --- Tabela comparativa --- */
+.tabela { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+.tabela th, .tabela td {
+  padding: 10px; text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.tabela th { color: #00d8ff; }
+
+/* ====== Área de Testes ====== */
+.teste-css {
+  background: rgba(255,255,255,0.05);
+  margin-top: 40px;
+  padding: 25px;
+  border-radius: 12px;
+}
+.teste-css h2 { color: #00d8ff; margin-bottom: 10px; }
+.caixa {
+  width: 120px; height: 120px;
+  display: flex; align-items: center; justify-content: center;
+  color: #000; font-weight: bold; border-radius: 8px;
+}
+/* ====== Classes para alteração ====== */
+.teste-container {
+  display: grid;
+  grid-template-columns: repeat(3, 120px);
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+.caixa1 { background: lightcoral; }
+.caixa2 { background: lightblue; }
+.caixa3 { background: lightgreen; }
+
+@media (max-width: 600px) {
+  .col-3, .col-fixas, .col-fr, .col-repeat, .col-misto { grid-template-columns: 1fr 1fr; }
+  .span-demo { grid-template-columns: repeat(2, 1fr); }
+  .layout-areas { grid-template-columns: 90px 1fr; }
+  .teste-container { grid-template-columns: repeat(auto-fit, 120px); }
+}

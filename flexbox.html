@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flexbox - Aula de CSS</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="flexbox.css">
+</head>
+<body>
+
+  <header>
+    <h1>Flexbox - Aula de CSS</h1>
+    <a href="index.html">⬅ Voltar ao Hub</a>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>O que é o Flexbox?</h2>
+      <p>
+        O <strong>Flexbox</strong> (Flexible Box Layout) é um modelo de layout <strong>unidimensional</strong>:
+        ele organiza os elementos em uma <strong>linha OU em uma coluna</strong>, distribuindo o espaço
+        disponível e alinhando os itens com poucas linhas de CSS.
+      </p>
+      <p>Tudo começa com dois papéis:</p>
+      <ul>
+        <li><strong>Flex container</strong> — o elemento pai, que recebe <code>display: flex;</code>;</li>
+        <li><strong>Flex items</strong> — os filhos diretos do container, que passam a ser organizados por ele.</li>
+      </ul>
+      <pre><code>.container {
+  display: flex;
+}</code></pre>
+      <p>
+        Só os <strong>filhos diretos</strong> viram flex items. Netos não são afetados.
+      </p>
+    </section>
+
+    <section>
+      <h2>Eixo principal e eixo cruzado</h2>
+      <p>
+        O Flexbox trabalha com dois eixos. O <strong>eixo principal</strong> (<em>main axis</em>) é a direção em que os itens
+        são colocados; o <strong>eixo cruzado</strong> (<em>cross axis</em>) é perpendicular a ele.
+      </p>
+      <ul>
+        <li>Com <code>flex-direction: row</code> (padrão): principal = horizontal, cruzado = vertical;</li>
+        <li>Com <code>flex-direction: column</code>: principal = vertical, cruzado = horizontal.</li>
+      </ul>
+      <p>
+        Por isso, <code>justify-content</code> alinha no eixo <strong>principal</strong> e
+        <code>align-items</code> alinha no eixo <strong>cruzado</strong>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Básico 1: flex-direction</h2>
+      <p>Define a direção do eixo principal.</p>
+
+      <p><code>row</code> (padrão)</p>
+      <div class="fx-demo dir-row"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+
+      <p><code>row-reverse</code></p>
+      <div class="fx-demo dir-row-reverse"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+
+      <p><code>column</code></p>
+      <div class="fx-demo dir-column"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+
+      <p><code>column-reverse</code></p>
+      <div class="fx-demo dir-column-reverse"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+
+      <pre><code>.container {
+  display: flex;
+  flex-direction: row | row-reverse | column | column-reverse;
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>Básico 2: justify-content</h2>
+      <p>Distribui os itens ao longo do <strong>eixo principal</strong>.</p>
+
+      <p><code>flex-start</code> (padrão)</p>
+      <div class="fx-demo jc-start"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+      <p><code>center</code></p>
+      <div class="fx-demo jc-center"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+      <p><code>flex-end</code></p>
+      <div class="fx-demo jc-end"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+      <p><code>space-between</code> — primeiro e último colados nas pontas</p>
+      <div class="fx-demo jc-between"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+      <p><code>space-around</code> — espaço igual ao redor de cada item</p>
+      <div class="fx-demo jc-around"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+      <p><code>space-evenly</code> — espaços totalmente iguais</p>
+      <div class="fx-demo jc-evenly"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+
+      <pre><code>.container {
+  display: flex;
+  justify-content: space-between;
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>Básico 3: align-items</h2>
+      <p>Alinha os itens no <strong>eixo cruzado</strong> (aqui, na vertical).</p>
+
+      <p><code>flex-start</code></p>
+      <div class="fx-demo ai-start"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+      <p><code>center</code></p>
+      <div class="fx-demo ai-center"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+      <p><code>flex-end</code></p>
+      <div class="fx-demo ai-end"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+      <p><code>stretch</code> (padrão) — itens sem altura definida esticam até preencher o container</p>
+      <div class="fx-demo ai-stretch"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+
+      <p>Combinando os dois, temos a centralização perfeita:</p>
+      <pre><code>.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>Básico 4: gap e flex-wrap</h2>
+      <p>
+        <code>gap</code> cria espaço entre os itens sem precisar de margens.
+        Por padrão, o Flexbox mantém tudo em uma linha só; com <code>flex-wrap: wrap</code>,
+        os itens que não cabem passam para a linha de baixo.
+      </p>
+      <div class="fx-demo gap-demo"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+      <p>Itens de 130px com <code>flex-wrap: wrap</code> (redimensione a janela para ver a quebra):</p>
+      <div class="fx-demo wrap-demo">
+        <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        <div class="item">4</div><div class="item">5</div>
+      </div>
+      <pre><code>.container {
+  display: flex;
+  flex-wrap: wrap;   /* nowrap (padrão) | wrap | wrap-reverse */
+  gap: 10px;         /* ou: row-gap / column-gap */
+}</code></pre>
+      <p>
+        Atalho: <code>flex-flow: row wrap;</code> combina <code>flex-direction</code> e <code>flex-wrap</code>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Intermediário 1: flex-grow, flex-shrink e flex-basis</h2>
+      <p>Controlam como cada item <strong>cresce</strong>, <strong>encolhe</strong> e qual é seu <strong>tamanho inicial</strong>.</p>
+      <ul>
+        <li><code>flex-grow</code> — quanto do espaço livre o item pode ocupar (padrão: 0);</li>
+        <li><code>flex-shrink</code> — o quanto ele aceita encolher quando falta espaço (padrão: 1);</li>
+        <li><code>flex-basis</code> — tamanho inicial no eixo principal, antes de crescer ou encolher (padrão: auto).</li>
+      </ul>
+      <p>Item 2 com <code>flex-grow: 1</code> e item 3 com <code>flex-grow: 2</code> (o 3 ocupa o dobro do espaço livre):</p>
+      <div class="fx-demo grow-demo">
+        <div class="item">1</div>
+        <div class="item g1">grow: 1</div>
+        <div class="item g2">grow: 2</div>
+      </div>
+      <p>O atalho <code>flex: 1</code> equivale a <code>1 1 0</code> e divide o espaço em partes iguais. O item vermelho tem tamanho fixo de 120px:</p>
+      <div class="fx-demo basis-demo">
+        <div class="item fixo">120px</div>
+        <div class="item">flex: 1</div>
+        <div class="item">flex: 1</div>
+      </div>
+      <pre><code>.item {
+  flex: 1;            /* grow 1, shrink 1, basis 0 */
+}
+.fixo {
+  flex: 0 0 120px;    /* não cresce, não encolhe, 120px */
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>Intermediário 2: align-self e order</h2>
+      <p>
+        <code>align-self</code> sobrescreve o <code>align-items</code> de <strong>um único item</strong>.
+        <code>order</code> muda a ordem visual sem mexer no HTML (padrão: 0; valores menores vêm primeiro).
+      </p>
+      <p><code>align-self</code>: item 1 no topo, item 2 centralizado, item 3 embaixo</p>
+      <div class="fx-demo self-demo"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+      <p><code>order</code>: o HTML é 1, 2, 3, mas a tela mostra 2, 3, 1</p>
+      <div class="fx-demo order-demo"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>
+      <pre><code>.item:nth-child(2) { align-self: center; }
+.item:nth-child(1) { order: 3; }</code></pre>
+      <p>
+        Cuidado: <code>order</code> altera só o visual. Leitores de tela e a tecla Tab continuam seguindo a ordem do HTML.
+      </p>
+    </section>
+
+    <section>
+      <h2>Intermediário 3: align-content</h2>
+      <p>
+        Quando há <strong>várias linhas</strong> (com <code>flex-wrap: wrap</code>), o <code>align-content</code>
+        distribui as linhas no eixo cruzado, como o <code>justify-content</code> faz com os itens.
+        Com uma linha só, ele não tem efeito.
+      </p>
+      <pre><code>.container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 300px;
+  align-content: space-between;
+}</code></pre>
+      <p>Resumo da diferença entre as três propriedades de alinhamento:</p>
+      <ul>
+        <li><code>justify-content</code> — itens no eixo principal;</li>
+        <li><code>align-items</code> — itens no eixo cruzado, dentro de cada linha;</li>
+        <li><code>align-content</code> — as linhas inteiras no eixo cruzado.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Aplicações no dia a dia</h2>
+
+      <h3>Barra de navegação</h3>
+      <p>O truque é <code>margin-right: auto</code> no logo, que empurra os links para a direita.</p>
+      <div class="navbar-demo">
+        <div class="logo">MeuSite</div>
+        <span>Início</span>
+        <span>Sobre</span>
+        <span>Contato</span>
+        <div class="btn">Entrar</div>
+      </div>
+      <pre><code>.navbar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.logo { margin-right: auto; }</code></pre>
+
+      <h3>Cards responsivos sem media query</h3>
+      <p>Cada card tenta ter 180px, cresce para dividir o espaço e quebra de linha quando não cabe.</p>
+      <div class="fx-demo cards-demo">
+        <div class="card-ex"><strong>Card 1</strong><p>Conteúdo do primeiro card.</p></div>
+        <div class="card-ex"><strong>Card 2</strong><p>Conteúdo do segundo card.</p></div>
+        <div class="card-ex"><strong>Card 3</strong><p>Conteúdo do terceiro card.</p></div>
+      </div>
+      <pre><code>.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.card { flex: 1 1 180px; }</code></pre>
+
+      <h3>Rodapé sempre embaixo da página</h3>
+      <p>Este próprio site faz isso: o <code>body</code> é uma coluna flex e o <code>footer</code> usa <code>margin-top: auto</code>.</p>
+      <pre><code>body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+footer { margin-top: auto; }</code></pre>
+    </section>
+
+    <section>
+      <h2>Playground interativo</h2>
+      <p>Mude as propriedades e veja o resultado em tempo real.</p>
+      <div class="controles">
+        <label>flex-direction
+          <select id="sel-direction">
+            <option>row</option><option>row-reverse</option><option>column</option><option>column-reverse</option>
+          </select>
+        </label>
+        <label>justify-content
+          <select id="sel-justify">
+            <option>flex-start</option><option>center</option><option>flex-end</option>
+            <option>space-between</option><option>space-around</option><option>space-evenly</option>
+          </select>
+        </label>
+        <label>align-items
+          <select id="sel-align">
+            <option>stretch</option><option>flex-start</option><option>center</option><option>flex-end</option>
+          </select>
+        </label>
+        <label>flex-wrap
+          <select id="sel-wrap">
+            <option>nowrap</option><option>wrap</option><option>wrap-reverse</option>
+          </select>
+        </label>
+      </div>
+      <div class="fx-demo" id="playground">
+        <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+      </div>
+      <pre><code id="codigo-playground"></code></pre>
+    </section>
+
+    <section>
+      <h2>Atividade Prática</h2>
+      <p>Crie uma página que contenha:</p>
+      <ul>
+        <li>Uma barra de navegação com logo à esquerda e links à direita;</li>
+        <li>Uma linha de 3 cards com <code>flex: 1 1 200px</code> e <code>gap</code>;</li>
+        <li>Um card com conteúdo centralizado nos dois eixos;</li>
+        <li>Um layout com rodapé fixo na base, usando <code>flex-direction: column</code>.</li>
+      </ul>
+      <p>Treine também com o jogo <a href="https://flexboxfroggy.com/">Flexbox Froggy 🐸</a>.</p>
+    </section>
+
+    <section class="teste-css">
+      <h2>🧩 Área de Testes</h2>
+      <p>Altere as classes abaixo no arquivo <strong>flexbox.css</strong> para ver como o CSS afeta cada elemento.
+         Experimente <code>justify-content</code>, <code>flex-direction</code> e <code>gap</code> em <code>.teste-container</code>.</p>
+
+      <div class="teste-container">
+        <div class="caixa caixa1">.caixa1</div>
+        <div class="caixa caixa2">.caixa2</div>
+        <div class="caixa caixa3">.caixa3</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Desenvolvido por Prof. Dionatan Inhoato Markiu — © 2025</p>
+  </footer>
+
+  <script>
+    const pg = document.getElementById('playground');
+    const ids = {
+      'sel-direction': 'flexDirection',
+      'sel-justify': 'justifyContent',
+      'sel-align': 'alignItems',
+      'sel-wrap': 'flexWrap'
+    };
+    const nomes = {
+      flexDirection: 'flex-direction',
+      justifyContent: 'justify-content',
+      alignItems: 'align-items',
+      flexWrap: 'flex-wrap'
+    };
+    function atualizar() {
+      let css = '.container {\n  display: flex;\n';
+      for (const id in ids) {
+        const valor = document.getElementById(id).value;
+        pg.style[ids[id]] = valor;
+        css += '  ' + nomes[ids[id]] + ': ' + valor + ';\n';
+      }
+      css += '}';
+      document.getElementById('codigo-playground').textContent = css;
+    }
+    for (const id in ids) document.getElementById(id).addEventListener('change', atualizar);
+    atualizar();
+  </script>
+
+</body>
+</html>

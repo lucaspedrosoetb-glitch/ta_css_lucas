@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grid - Aula de CSS</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="grid.css">
+</head>
+<body>
+
+  <header>
+    <h1>Grid - Aula de CSS</h1>
+    <a href="index.html">⬅ Voltar ao Hub</a>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>O que é o CSS Grid?</h2>
+      <p>
+        O <strong>CSS Grid</strong> é um modelo de layout <strong>bidimensional</strong>: ele organiza os elementos
+        em <strong>linhas E colunas</strong> ao mesmo tempo, como uma grade ou tabela.
+      </p>
+      <p>Vocabulário básico:</p>
+      <ul>
+        <li><strong>Grid container</strong> — o elemento pai, com <code>display: grid;</code>;</li>
+        <li><strong>Grid items</strong> — os filhos diretos do container;</li>
+        <li><strong>Track</strong> — uma linha ou uma coluna da grade;</li>
+        <li><strong>Célula</strong> — o encontro de uma linha com uma coluna;</li>
+        <li><strong>Grid lines</strong> — as linhas numeradas que separam as tracks (começam em 1);</li>
+        <li><strong>Gap</strong> — o espaço entre as tracks.</li>
+      </ul>
+      <pre><code>.container {
+  display: grid;
+}</code></pre>
+      <p>
+        Só <code>display: grid</code> ainda não muda muito o visual: é preciso dizer quantas colunas e linhas queremos.
+      </p>
+    </section>
+
+    <section>
+      <h2>1. Criando colunas: grid-template-columns</h2>
+      <p>Cada valor da lista cria uma coluna com aquela largura.</p>
+
+      <p><code>1fr 1fr 1fr</code> — três colunas iguais</p>
+      <div class="gd col-3">
+        <div class="cel">1</div><div class="cel">2</div><div class="cel">3</div>
+        <div class="cel">4</div><div class="cel">5</div><div class="cel">6</div>
+      </div>
+
+      <p><code>100px 200px 100px</code> — larguras fixas</p>
+      <div class="gd col-fixas">
+        <div class="cel">100px</div><div class="cel">200px</div><div class="cel">100px</div>
+      </div>
+
+      <p><code>1fr 2fr 1fr</code> — a coluna do meio é duas vezes maior</p>
+      <div class="gd col-fr">
+        <div class="cel">1fr</div><div class="cel">2fr</div><div class="cel">1fr</div>
+      </div>
+
+      <p><code>120px 1fr 1fr</code> — mistura de fixa com flexível</p>
+      <div class="gd col-misto">
+        <div class="cel">120px</div><div class="cel">1fr</div><div class="cel">1fr</div>
+      </div>
+
+      <p>
+        A unidade <code>fr</code> (fração) divide o <strong>espaço livre</strong> proporcionalmente.
+        E <code>repeat()</code> evita repetição:
+      </p>
+      <div class="gd col-repeat">
+        <div class="cel">1</div><div class="cel">2</div><div class="cel">3</div><div class="cel">4</div>
+      </div>
+      <pre><code>.container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);   /* = 1fr 1fr 1fr 1fr */
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>2. Criando linhas: grid-template-rows</h2>
+      <p>
+        Funciona igual às colunas. Aqui, a primeira linha tem 40px e a segunda 90px.
+      </p>
+      <div class="gd linhas-demo">
+        <div class="cel">1</div><div class="cel">2</div><div class="cel">3</div>
+        <div class="cel">4</div><div class="cel">5</div><div class="cel">6</div>
+      </div>
+      <pre><code>.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 40px 90px;
+}</code></pre>
+      <p>
+        Se houver mais itens do que células, o Grid cria <strong>linhas implícitas</strong> automaticamente.
+        Use <code>grid-auto-rows</code> para controlar a altura delas:
+      </p>
+      <div class="gd auto-rows">
+        <div class="cel">1</div><div class="cel">2</div><div class="cel">3</div>
+        <div class="cel">4</div><div class="cel">5</div><div class="cel">6</div>
+        <div class="cel">7</div>
+      </div>
+      <pre><code>.container {
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 60px;
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>3. Espaçamento: gap</h2>
+      <p>
+        <code>gap</code> define o espaço entre linhas e colunas. Também existem
+        <code>row-gap</code> e <code>column-gap</code> para controlar cada um separadamente.
+      </p>
+      <div class="gd gap-grande">
+        <div class="cel">1</div><div class="cel">2</div><div class="cel">3</div>
+        <div class="cel">4</div><div class="cel">5</div><div class="cel">6</div>
+      </div>
+      <pre><code>.container {
+  gap: 10px;                 /* linhas e colunas */
+  column-gap: 30px;          /* só colunas */
+  row-gap: 10px;             /* só linhas */
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>4. Posicionando itens: grid-column e grid-row</h2>
+      <p>
+        Um item pode ocupar <strong>várias células</strong>. Usamos os números das grid lines
+        ou a palavra <code>span</code>.
+      </p>
+      <div class="gd span-demo">
+        <div class="cel a">a: 1 / 3</div>
+        <div class="cel b">b: span 2</div>
+        <div class="cel c">c: row span 2</div>
+        <div class="cel">5</div>
+        <div class="cel">6</div>
+        <div class="cel d">d: 1 / -1 (linha inteira)</div>
+      </div>
+      <pre><code>.a { grid-column: 1 / 3; }     /* começa na linha 1, termina na 3 */
+.b { grid-column: span 2; }    /* ocupa 2 colunas */
+.c { grid-row: span 2; }       /* ocupa 2 linhas */
+.d { grid-column: 1 / -1; }    /* -1 = última linha da grade */</code></pre>
+    </section>
+
+    <section>
+      <h2>5. Grid responsivo: auto-fit e minmax</h2>
+      <p>
+        Com <code>repeat(auto-fit, minmax(120px, 1fr))</code>, o navegador cria quantas colunas couberem,
+        cada uma com no mínimo 120px. Redimensione a janela para ver. É a mesma técnica usada na página
+        inicial (hub) deste site.
+      </p>
+      <div class="gd auto-fit">
+        <div class="cel">1</div><div class="cel">2</div><div class="cel">3</div>
+        <div class="cel">4</div><div class="cel">5</div><div class="cel">6</div>
+      </div>
+      <pre><code>.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}</code></pre>
+      <ul>
+        <li><code>minmax(min, max)</code> — define um tamanho mínimo e um máximo para a coluna;</li>
+        <li><code>auto-fit</code> — encaixa o máximo de colunas e estica as restantes para ocupar a sobra;</li>
+        <li><code>auto-fill</code> — parecido, mas mantém as colunas vazias reservadas.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. Layout de página com grid-template-areas</h2>
+      <p>
+        Dá para "desenhar" o layout com nomes. Cada string é uma linha, e cada palavra é uma coluna.
+        Repetir o nome faz o item ocupar várias células.
+      </p>
+      <div class="gd layout-areas">
+        <div class="cel topo">Topo</div>
+        <div class="cel menu">Menu</div>
+        <div class="cel principal">Principal</div>
+        <div class="cel rodape">Rodapé</div>
+      </div>
+      <pre><code>.container {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: 50px 130px 50px;
+  grid-template-areas:
+    "topo   topo"
+    "menu   principal"
+    "rodape rodape";
+}
+.topo      { grid-area: topo; }
+.menu      { grid-area: menu; }
+.principal { grid-area: principal; }
+.rodape    { grid-area: rodape; }</code></pre>
+      <p>
+        Para mudar o layout no celular, basta redefinir o <code>grid-template-areas</code> dentro de uma media query.
+      </p>
+    </section>
+
+    <section>
+      <h2>7. Alinhamento no Grid</h2>
+      <p>
+        O alinhamento usa nomes parecidos com os do Flexbox, mas aqui eles funcionam dentro de <strong>cada célula</strong>:
+      </p>
+      <ul>
+        <li><code>justify-items</code> — alinha os itens na horizontal dentro da célula;</li>
+        <li><code>align-items</code> — alinha os itens na vertical dentro da célula;</li>
+        <li><code>place-items</code> — atalho para os dois (<code>align-items justify-items</code>);</li>
+        <li><code>justify-content</code> / <code>align-content</code> — alinham a grade inteira dentro do container.</li>
+      </ul>
+
+      <p><code>center</code></p>
+      <div class="gd alin alin-center">
+        <div class="cel">1</div><div class="cel">2</div><div class="cel">3</div>
+      </div>
+      <p><code>end</code></p>
+      <div class="gd alin alin-end">
+        <div class="cel">1</div><div class="cel">2</div><div class="cel">3</div>
+      </div>
+      <p><code>stretch</code> (padrão)</p>
+      <div class="gd alin alin-stretch">
+        <div class="cel">1</div><div class="cel">2</div><div class="cel">3</div>
+      </div>
+
+      <p>A centralização mais curta que existe:</p>
+      <div class="gd place-center">
+        <div class="cel">Centro</div>
+      </div>
+      <pre><code>.container {
+  display: grid;
+  place-items: center;
+}</code></pre>
+      <p>
+        Um item específico pode ignorar a regra do pai com <code>justify-self</code>, <code>align-self</code> ou <code>place-self</code>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Flexbox ou Grid?</h2>
+      <table class="tabela">
+        <tr><th></th><th>Flexbox</th><th>Grid</th></tr>
+        <tr><td>Dimensões</td><td>Uma (linha ou coluna)</td><td>Duas (linhas e colunas)</td></tr>
+        <tr><td>Quem manda</td><td>O conteúdo</td><td>O layout</td></tr>
+        <tr><td>Bom para</td><td>Menus, botões, barras, alinhamento de itens</td><td>Páginas, galerias, painéis, formulários</td></tr>
+      </table>
+      <p>
+        Os dois funcionam juntos: use Grid para a estrutura da página e Flexbox para alinhar o conteúdo dentro de cada área.
+        Neste site, o hub usa Grid e os cards usam Flexbox.
+      </p>
+    </section>
+
+    <section>
+      <h2>Playground interativo</h2>
+      <p>Mude o número de colunas, o espaçamento e o alinhamento e veja o resultado.</p>
+      <div class="controles">
+        <label>Colunas
+          <input type="number" id="in-cols" value="3" min="1" max="6">
+        </label>
+        <label>gap (px)
+          <input type="number" id="in-gap" value="10" min="0" max="40">
+        </label>
+        <label>justify-items
+          <select id="sel-ji"><option>stretch</option><option>start</option><option>center</option><option>end</option></select>
+        </label>
+        <label>align-items
+          <select id="sel-ai"><option>stretch</option><option>start</option><option>center</option><option>end</option></select>
+        </label>
+      </div>
+      <div class="gd" id="playground">
+        <div class="cel" style="min-height:70px">1</div><div class="cel" style="min-height:70px">2</div>
+        <div class="cel" style="min-height:70px">3</div><div class="cel" style="min-height:70px">4</div>
+        <div class="cel" style="min-height:70px">5</div><div class="cel" style="min-height:70px">6</div>
+      </div>
+      <pre><code id="codigo-playground"></code></pre>
+    </section>
+
+    <section>
+      <h2>Atividade Prática</h2>
+      <p>Crie uma página que contenha:</p>
+      <ul>
+        <li>Uma galeria com 6 itens em 3 colunas iguais e <code>gap</code>;</li>
+        <li>Uma galeria responsiva com <code>repeat(auto-fit, minmax(150px, 1fr))</code>;</li>
+        <li>Um layout de página (topo, menu, conteúdo, rodapé) com <code>grid-template-areas</code>;</li>
+        <li>Um item que ocupe a linha inteira usando <code>grid-column: 1 / -1</code>.</li>
+      </ul>
+      <p>Treine também com o jogo <a href="https://cssgridgarden.com/">CSS Grid Garden 🥕</a>.</p>
+    </section>
+
+    <section class="teste-css">
+      <h2>🧩 Área de Testes</h2>
+      <p>Altere as classes abaixo no arquivo <strong>grid.css</strong> para ver como o CSS afeta cada elemento.
+         Experimente mudar o <code>grid-template-columns</code> do <code>.teste-container</code> ou
+         usar <code>grid-column: span 2</code> em uma das caixas.</p>
+
+      <div class="teste-container">
+        <div class="caixa caixa1">.caixa1</div>
+        <div class="caixa caixa2">.caixa2</div>
+        <div class="caixa caixa3">.caixa3</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Desenvolvido por Prof. Dionatan Inhoato Markiu — © 2025</p>
+  </footer>
+
+  <script>
+    const pg = document.getElementById('playground');
+    const cols = document.getElementById('in-cols');
+    const gap = document.getElementById('in-gap');
+    const ji = document.getElementById('sel-ji');
+    const ai = document.getElementById('sel-ai');
+    function atualizar() {
+      const n = Math.min(6, Math.max(1, parseInt(cols.value) || 1));
+      const g = Math.min(40, Math.max(0, parseInt(gap.value) || 0));
+      pg.style.gridTemplateColumns = 'repeat(' + n + ', 1fr)';
+      pg.style.gap = g + 'px';
+      pg.style.justifyItems = ji.value;
+      pg.style.alignItems = ai.value;
+      document.getElementById('codigo-playground').textContent =
+        '.container {\n  display: grid;\n  grid-template-columns: repeat(' + n + ', 1fr);\n  gap: ' + g +
+        'px;\n  justify-items: ' + ji.value + ';\n  align-items: ' + ai.value + ';\n}';
+    }
+    [cols, gap, ji, ai].forEach(el => el.addEventListener('input', atualizar));
+    atualizar();
+  </script>
+
+</body>
+</html>
